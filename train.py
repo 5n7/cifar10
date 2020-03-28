@@ -16,7 +16,7 @@ utils.set_seed(0)
 def main(hparams):
     engine = Module(hparams)
 
-    mlf_logger = MLFlowLogger(experiment_name=hparams.exp_name, tracking_uri="./mlruns")
+    mlf_logger = MLFlowLogger(experiment_name=hparams.exp_name, tracking_uri="./mlruns", tags=args.tags)
 
     exp = mlf_logger.experiment.get_experiment_by_name(hparams.exp_name)
     artifacts_dir = os.path.join(exp.artifact_location, mlf_logger.run_id, "artifacts")
@@ -36,6 +36,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--exp-name", default="Default")
     parser.add_argument("--num-epochs", default=128, type=int)
+    parser.add_argument("--tags", action=utils.DictPairParesr, metavar=utils.DictPairParesr.METAVAR)
 
     parser = Module.add_model_specific_args(parser)
     args = parser.parse_args()

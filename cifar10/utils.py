@@ -7,7 +7,7 @@ import numpy as np
 import torch
 
 
-class DictPairParesr(argparse.Action):
+class DictPairParser(argparse.Action):
     METAVAR = "KEY1=VALUE1,KEY2=VALUE2,KEY3=VALUE3"
 
     def __call__(self, parser, namespace, values, option_string=None):

@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     parser.add_argument("--exp-name", default="Default")
     parser.add_argument("--num-epochs", default=128, type=int)
-    parser.add_argument("--tags", action=utils.DictPairParesr, metavar=utils.DictPairParesr.METAVAR)
+    parser.add_argument("--tags", action=utils.DictPairParser, metavar=utils.DictPairParser.METAVAR)
 
     parser = Module.add_model_specific_args(parser)
     args = parser.parse_args()

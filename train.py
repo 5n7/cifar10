@@ -6,11 +6,11 @@ from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import MLFlowLogger
 
-from cifar10 import Module, set_seed
+from cifar10 import Module, utils
 
 warnings.filterwarnings("ignore")
 
-set_seed(0)
+utils.set_seed(0)
 
 
 def main(hparams):

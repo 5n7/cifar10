@@ -13,6 +13,8 @@ __all__ = ["Module"]
 
 
 class Module(LightningModule):
+    NUM_CLASSES = 10
+
     def __init__(self, hparams: argparse.Namespace):
         super(Module, self).__init__()
 
@@ -22,7 +24,18 @@ class Module(LightningModule):
         self.__build_criterion()
 
     def __build_model(self):
-        self._model = M.vgg16(True)
+        m = self.hparams.model_name
+
+        if m == "resnet50":
+            self._model = M.resnet50(pretrained=True)
+            self._model.fc = nn.Linear(2048, self.NUM_CLASSES)
+
+        elif m == "vgg16":
+            self._model = M.vgg16(pretrained=True)
+            self._model.classifier[6] = nn.Linear(4096, self.NUM_CLASSES)
+
+        else:
+            raise ValueError(f"Model {m} is not supported.")
 
     def __build_criterion(self):
         self._criterion = nn.CrossEntropyLoss()
@@ -87,6 +100,7 @@ class Module(LightningModule):
 
         # train
         parser.add_argument("--batch-size", default=128, type=int)
+        parser.add_argument("--model-name", default="vgg16")
 
         # dataset
         parser.add_argument("--data-root", default=".dataset/cifar10")
